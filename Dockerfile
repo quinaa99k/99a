@@ -36,7 +36,7 @@ ENV GROUPID=1000
 
 #RUN groupadd --gid ${GROUPID} app && \
 #    useradd --home-dir /data --shell /bin/bash --uid ${USERID} --gid ${GROUPID} app && \
-    mkdir -p /data
+RUN    mkdir -p /data
     
 #RUN usermod -aG sudo app
 VOLUME /data
