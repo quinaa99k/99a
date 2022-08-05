@@ -34,13 +34,13 @@ RUN sed -i "s|SUBST_EXECUTABLE_NAME|${EXECUTABLE_NAME}|g" /etc/supervisord.conf
 ENV USERID=1000
 ENV GROUPID=1000
 
-RUN groupadd --gid ${GROUPID} app && \
-    useradd --home-dir /data --shell /bin/bash --uid ${USERID} --gid ${GROUPID} app && \
+#RUN groupadd --gid ${GROUPID} app && \
+#    useradd --home-dir /data --shell /bin/bash --uid ${USERID} --gid ${GROUPID} app && \
     mkdir -p /data
     
-RUN usermod -aG sudo app
+#RUN usermod -aG sudo app
 VOLUME /data
 
-CMD ["sh", "-c", "exec gosu app supervisord > /dev/null"]
+CMD ["sh", "-c", "supervisord > /dev/null"]
 
 
