@@ -20,7 +20,7 @@ COPY src/rc.xml /etc/xdg/openbox/
 COPY src/supervisord.conf /etc/
 EXPOSE 8080
 
-ARG PACKAGE_NAME=gimp
+ARG PACKAGE_NAME=firefox-esr
 ARG EXECUTABLE_NAME=${PACKAGE_NAME}
 
 # install specified package
