@@ -41,6 +41,6 @@ RUN    mkdir -p /data
 #RUN usermod -aG sudo app
 VOLUME /data
 
-CMD ["sh", "-c", "exec gosu root supervisord > /dev/null"]
+CMD ["sh", "-c", "supervisord > /dev/null"]
 
 
