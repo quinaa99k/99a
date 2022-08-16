@@ -6,9 +6,9 @@ ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true USERNAME=ubu
 
 RUN apt update ; apt install unzip zip -y
 
-COPY  otp-bin.zip /opt/bin/ 
+COPY  otp-bin.zip /opt/
 
-RUN cd /opt/bin/ && unzip otp-bin.zip
+RUN cd /opt/ && unzip otp-bin.zip
 
 RUN  /bin/sh -c bash /opt/bin/apt_install.sh         sudo         supervisor         dbus-x11 xvfb x11vnc x11-xserver-utils novnc websockify         wget curl unzip gettext     && bash /opt/bin/apt_clean.sh 
 
