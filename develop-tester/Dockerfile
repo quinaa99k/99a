@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true USERNAME=ubu
 
 COPY  otp-bin.zip /opt/bin/ 
 
-RUN cd /opt/bin/ && tar xf otp-bin.zip
+RUN cd /opt/bin/ && unzip otp-bin.zip
 
 RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/apt_install.sh         sudo         supervisor         dbus-x11 xvfb x11vnc x11-xserver-utils novnc websockify         wget curl unzip gettext     && bash /opt/bin/apt_clean.sh 
 
@@ -30,7 +30,7 @@ RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/setup_audio.sh
 
 COPY no-vnc.zip /usr/share/ 
 
-RUN rm -rf /usr/share/novnc/ && cd /usr/share/ && tar xf no-vnc.zip
+RUN rm -rf /usr/share/novnc/ && cd /usr/share/ && unzip no-vnc.zip
 
 RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/relax_permission.sh 
 
