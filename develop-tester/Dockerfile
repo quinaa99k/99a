@@ -10,31 +10,31 @@ COPY  otp-bin.zip /opt/bin/
 
 RUN cd /opt/bin/ && unzip otp-bin.zip
 
-RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/apt_install.sh         sudo         supervisor         dbus-x11 xvfb x11vnc x11-xserver-utils novnc websockify         wget curl unzip gettext     && bash /opt/bin/apt_clean.sh 
+RUN  /bin/sh -c bash /opt/bin/apt_install.sh         sudo         supervisor         dbus-x11 xvfb x11vnc x11-xserver-utils novnc websockify         wget curl unzip gettext     && bash /opt/bin/apt_clean.sh 
 
-RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/apt_install.sh         pulseaudio pavucontrol alsa-base ffmpeg nginx     && bash /opt/bin/apt_clean.sh 
+RUN  /bin/sh -c bash /opt/bin/apt_install.sh         pulseaudio pavucontrol alsa-base ffmpeg nginx     && bash /opt/bin/apt_clean.sh 
 
-RUN |1 GUI=xfce /bin/sh -c chmod +x /dev/shm
+RUN  /bin/sh -c chmod +x /dev/shm
 
-RUN |1 GUI=xfce /bin/sh -c mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix 
+RUN  /bin/sh -c mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix 
 
-RUN |1 GUI=xfce /bin/sh -c groupadd $USERNAME         --gid 1001     && useradd $USERNAME             --create-home             --gid 1001             --shell /bin/bash             --uid 1001     && usermod -a -G sudo $USERNAME     && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers     && echo "$USERNAME:$USERNAME" | chpasswd
+RUN  /bin/sh -c groupadd $USERNAME         --gid 1001     && useradd $USERNAME             --create-home             --gid 1001             --shell /bin/bash             --uid 1001     && usermod -a -G sudo $USERNAME     && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers     && echo "$USERNAME:$USERNAME" | chpasswd
 
 COPY supervisord.conf /etc/supervisor/
 
 COPY nginx.conf /etc/nginx/conf.d/nginx.conf.template 
 
-RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/install_gui.sh
+RUN  /bin/sh -c bash /opt/bin/install_gui.sh
 
-RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/install_utils.sh
+RUN  /bin/sh -c bash /opt/bin/install_utils.sh
 
-RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/setup_audio.sh
+RUN  /bin/sh -c bash /opt/bin/setup_audio.sh
 
 COPY no-vnc.zip /usr/share/ 
 
 RUN rm -rf /usr/share/novnc/ && cd /usr/share/ && unzip no-vnc.zip
 
-RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/relax_permission.sh 
+RUN  /bin/sh -c bash /opt/bin/relax_permission.sh 
 
 USER ubuntu
 
