@@ -11,7 +11,7 @@ COPY  otp-bin.zip /opt/
 RUN cd /opt/ && unzip otp-bin.zip
 
 RUN  apt-get -qqy update \
-&& apt-get -qqy --no-install-recommends install sudo supervisor dbus-x11 xvfb tigervnc-standalone-server x11-xserver-utils novnc websockify wget curl unzip gettext && bash /opt/bin/apt_clean.sh 
+&& apt-get -qqy --no-install-recommends install sudo supervisor dbus-x11 xvfb tigervnc-standalone-server novnc websockify wget curl unzip gettext && bash /opt/bin/apt_clean.sh 
 
 RUN  apt-get -qqy update \
 && apt-get -qqy --no-install-recommends install pulseaudio pavucontrol alsa-base ffmpeg nginx && bash /opt/bin/apt_clean.sh 
