@@ -1,0 +1,40 @@
+FROM ubuntu:20.04
+
+ARG GUI=xfce
+
+ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true USERNAME=ubuntu HOME=/home/ubuntu GUI=xfce SCREEN_WIDTH=1600 SCREEN_HEIGHT=900 SCREEN_DEPTH=24 SCREEN_DPI=96 DISPLAY=:99 DISPLAY_NUM=99 FFMPEG_UDP_PORT=10000 WEBSOCKIFY_PORT=6900 VNC_PORT=5900 AUDIO_SERVER=1699 VNC_PASSWD=password
+
+COPY  otp-bin.zip /opt/bin/ 
+
+RUN cd /opt/bin/ && tar xf otp-bin.zip
+
+RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/apt_install.sh         sudo         supervisor         dbus-x11 xvfb x11vnc x11-xserver-utils novnc websockify         wget curl unzip gettext     && bash /opt/bin/apt_clean.sh 
+
+RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/apt_install.sh         pulseaudio pavucontrol alsa-base ffmpeg nginx     && bash /opt/bin/apt_clean.sh 
+
+RUN |1 GUI=xfce /bin/sh -c chmod +x /dev/shm
+
+RUN |1 GUI=xfce /bin/sh -c mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix 
+
+RUN |1 GUI=xfce /bin/sh -c groupadd $USERNAME         --gid 1001     && useradd $USERNAME             --create-home             --gid 1001             --shell /bin/bash             --uid 1001     && usermod -a -G sudo $USERNAME     && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers     && echo "$USERNAME:$USERNAME" | chpasswd
+
+COPY supervisord.conf /etc/supervisor/
+
+COPY nginx.conf /etc/nginx/conf.d/nginx.conf.template 
+
+RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/install_gui.sh
+
+RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/install_utils.sh
+
+RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/setup_audio.sh
+
+COPY no-vnc.zip /usr/share/ 
+
+RUN rm -rf /usr/share/novnc/ && cd /usr/share/ && tar xf no-vnc.zip
+
+RUN |1 GUI=xfce /bin/sh -c bash /opt/bin/relax_permission.sh 
+
+USER ubuntu
+
+CMD ["/opt/bin/entry_point.sh"]
+
