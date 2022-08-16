@@ -38,6 +38,8 @@ RUN rm -rf /usr/share/novnc/ && cd /usr/share/ && unzip no-vnc.zip
 
 RUN   bash /opt/bin/relax_permission.sh 
 
+RUN  sed -i "s/UI.initSetting('resize', 'off');/UI.initSetting('resize', 'remote');/g" /usr/share/novnc/app/ui.js
+
 USER ubuntu
 
 CMD ["/opt/bin/entry_point.sh"]
