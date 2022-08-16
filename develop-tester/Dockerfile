@@ -10,9 +10,11 @@ COPY  otp-bin.zip /opt/
 
 RUN cd /opt/ && unzip otp-bin.zip
 
-RUN  /bin/sh -c bash /opt/bin/apt_install.sh sudo supervisor dbus-x11 xvfb x11vnc x11-xserver-utils novnc websockify wget curl unzip gettext && bash /opt/bin/apt_clean.sh 
+RUN  apt-get -qqy update \
+&& apt-get -qqy --no-install-recommends install sudo supervisor dbus-x11 xvfb x11vnc x11-xserver-utils novnc websockify wget curl unzip gettext && bash /opt/bin/apt_clean.sh 
 
-RUN  /bin/sh -c bash /opt/bin/apt_install.sh pulseaudio pavucontrol alsa-base ffmpeg nginx && bash /opt/bin/apt_clean.sh 
+RUN  apt-get -qqy update \
+&& apt-get -qqy --no-install-recommends install pulseaudio pavucontrol alsa-base ffmpeg nginx && bash /opt/bin/apt_clean.sh 
 
 RUN  /bin/sh -c chmod +x /dev/shm
 
