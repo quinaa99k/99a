@@ -16,27 +16,27 @@ RUN  apt-get -qqy update \
 RUN  apt-get -qqy update \
 && apt-get -qqy --no-install-recommends install pulseaudio pavucontrol alsa-base ffmpeg nginx && bash /opt/bin/apt_clean.sh 
 
-RUN  /bin/sh -c chmod +x /dev/shm
+RUN   chmod +x /dev/shm
 
-RUN  /bin/sh -c mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix 
+RUN  mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix 
 
-RUN  /bin/sh -c groupadd $USERNAME --gid 1001 && useradd $USERNAME --create-home --gid 1001 --shell /bin/bash --uid 1001 && usermod -a -G sudo $USERNAME && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers     && echo "$USERNAME:$USERNAME" | chpasswd
+RUN  groupadd $USERNAME --gid 1001 && useradd $USERNAME --create-home --gid 1001 --shell /bin/bash --uid 1001 && usermod -a -G sudo $USERNAME && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers     && echo "$USERNAME:$USERNAME" | chpasswd
 
 COPY supervisord.conf /etc/supervisor/
 
 COPY nginx.conf /etc/nginx/conf.d/nginx.conf.template 
 
-RUN  /bin/sh -c bash /opt/bin/install_gui.sh
+RUN  bash /opt/bin/install_gui.sh
 
-RUN  /bin/sh -c bash /opt/bin/install_utils.sh
+RUN  bash /opt/bin/install_utils.sh
 
-RUN  /bin/sh -c bash /opt/bin/setup_audio.sh
+RUN   bash /opt/bin/setup_audio.sh
 
 COPY no-vnc.zip /usr/share/ 
 
 RUN rm -rf /usr/share/novnc/ && cd /usr/share/ && unzip no-vnc.zip
 
-RUN  /bin/sh -c bash /opt/bin/relax_permission.sh 
+RUN   bash /opt/bin/relax_permission.sh 
 
 USER ubuntu
 
