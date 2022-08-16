@@ -10,15 +10,15 @@ COPY  otp-bin.zip /opt/
 
 RUN cd /opt/ && unzip otp-bin.zip
 
-RUN  /bin/sh -c bash /opt/bin/apt_install.sh         sudo         supervisor         dbus-x11 xvfb x11vnc x11-xserver-utils novnc websockify         wget curl unzip gettext     && bash /opt/bin/apt_clean.sh 
+RUN  /bin/sh -c bash /opt/bin/apt_install.sh sudo supervisor dbus-x11 xvfb x11vnc x11-xserver-utils novnc websockify wget curl unzip gettext && bash /opt/bin/apt_clean.sh 
 
-RUN  /bin/sh -c bash /opt/bin/apt_install.sh         pulseaudio pavucontrol alsa-base ffmpeg nginx     && bash /opt/bin/apt_clean.sh 
+RUN  /bin/sh -c bash /opt/bin/apt_install.sh pulseaudio pavucontrol alsa-base ffmpeg nginx && bash /opt/bin/apt_clean.sh 
 
 RUN  /bin/sh -c chmod +x /dev/shm
 
 RUN  /bin/sh -c mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix 
 
-RUN  /bin/sh -c groupadd $USERNAME         --gid 1001     && useradd $USERNAME             --create-home             --gid 1001             --shell /bin/bash             --uid 1001     && usermod -a -G sudo $USERNAME     && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers     && echo "$USERNAME:$USERNAME" | chpasswd
+RUN  /bin/sh -c groupadd $USERNAME --gid 1001 && useradd $USERNAME --create-home --gid 1001 --shell /bin/bash --uid 1001 && usermod -a -G sudo $USERNAME && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers     && echo "$USERNAME:$USERNAME" | chpasswd
 
 COPY supervisord.conf /etc/supervisor/
 
